@@ -1,10 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Security.Cryptography.X509Certificates;
 using TaoUniverse.GameObjects;
 
 namespace TaoUniverse
 {
+    
+
 
     public class Game1 : Game
     {
@@ -26,7 +30,7 @@ namespace TaoUniverse
         {
             // TODO: Add your initialization logic here
             Globals._content = Content;
-            player = new Player(20,20);
+            player = new Player(new Player.Data(2,2));
             base.Initialize();
         }
 
@@ -57,6 +61,7 @@ namespace TaoUniverse
 
             Globals._spriteBatch.Begin();
 
+            Globals.Update(gameTime);
             player.Draw();
 
             Globals._spriteBatch.End();
