@@ -15,6 +15,12 @@ namespace TaoUniverse
         public static SpriteBatch _spriteBatch;
         public static ContentManager _content;
         public static GraphicsDeviceManager _graphics;
+        public static GameDebugger _gameDebugger;   
+
+        public static SpriteFont Font()
+        {
+            return _gameDebugger.GetFont();
+        }
 
         public static void Update(GameTime gt)
         {

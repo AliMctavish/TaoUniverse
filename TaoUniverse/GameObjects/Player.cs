@@ -7,7 +7,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace TaoUniverse.GameObjects
 {
@@ -23,6 +25,10 @@ namespace TaoUniverse.GameObjects
         private bool speedChanged = false;
         private float dashSpeed = 0.08f;
         private bool pressed = false;
+        private float timer = 2;
+        //DEBUGGERS
+        private GameDebugger textLocation;
+        private GameDebugger textLocation2;
 
         public struct Data
         {
@@ -36,8 +42,23 @@ namespace TaoUniverse.GameObjects
 
         }
 
+        private void InIt()
+        {
+            textLocation = new GameDebugger();                    
+            textLocation2 = new GameDebugger();
+        }
+
+        private void Load()
+        {
+            textLocation.GetLocation();
+            textLocation2.GetLocation();
+        }
+
+
         public Player(Data startingPosition)
         {
+            InIt();
+            Load();
             position = new Vector2(startingPosition.x, startingPosition.y);
             Cube cube = new Cube();
             texture = cube.MakeCube(30, 30, Color.White);
@@ -71,6 +92,18 @@ namespace TaoUniverse.GameObjects
             if(speedChanged)
                 PlayerDash();
 
+
+            // TODO: handle the dash pressed button 
+            if(pressed)
+            {
+                timer -= Globals.Time;      
+                if(timer < 0)
+                {
+                    timer = 2;
+                    pressed = false;    
+                }
+            }
+
             if (state.IsKeyDown(Keys.Space))
             {
                 velocity.Y = -jump;
@@ -92,6 +125,10 @@ namespace TaoUniverse.GameObjects
         }
         public void Draw()
         {
+            //FIX THE DIFFERENT VARIABLE CALLS FOR THE SAME ACT !!
+            textLocation.Draw($"pressed{pressed}");
+            textLocation2.Draw($"life is hard");
+
             Globals._spriteBatch.Draw(texture, position, Color.White);
         }
     }

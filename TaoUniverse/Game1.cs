@@ -7,14 +7,12 @@ using TaoUniverse.GameObjects;
 
 namespace TaoUniverse
 {
-    
-
-
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Player player; 
+        private GameDebugger _debugger;
 
         public Game1()
         {
@@ -30,6 +28,7 @@ namespace TaoUniverse
         {
             // TODO: Add your initialization logic here
             Globals._content = Content;
+            Globals._gameDebugger = new GameDebugger();
             player = new Player(new Player.Data(2,2));
             base.Initialize();
         }
